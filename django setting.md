@@ -209,3 +209,33 @@ http://127.0.0.1:8000/
 
 - ctrl + c -> quit 
 - 기본적으로 localhost:8000 에서 실행된다.
+
+
+
+3. git 등록하기
+
+```bash
+git init
+```
+
+4. crud/settings.py
+
+```python
+LANGUAGE_CODE = 'ko-kr'
+
+TIME_ZONE = 'Asia/Seoul'
+```
+
+5. app생성
+
+```python
+$ python manage.py startapp articles
+```
+
+6. crud 프로젝트에 aritles app 등록
+
+```python
+INSTALLED_APPS = [
+    'articles',
+```
+
