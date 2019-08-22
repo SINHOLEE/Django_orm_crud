@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+new
+{% endblock  %}
+
+{% block content %}
+<h1>게시글 작성</h1>
+
+<form action="/articles/create/">
+  {% comment %} 라벨 for은 id값에 따라간다. {% endcomment %}
+  
+  <label for="title">제목</label>
+  <input type="text" name="title" id="title"><br>
+
+  <label for="content">내용</label>
+  <textarea name="content" id="content"></textarea><br>
+  <button type="submit">제출하기</button>
+  <a href="/articles/index/">뒤로가기</a>
+</form>
+{% endblock  %}

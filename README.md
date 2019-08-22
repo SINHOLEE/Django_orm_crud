@@ -1,4 +1,4 @@
-# Django ORM
+# 1. Django ORM
 ### 1. 모델 디자인(작성)하기
 
 ```python
@@ -543,3 +543,144 @@ class ArticleAdmin(admin.ModelAdmin):
 ![캡처5](images/캡처5.PNG)
 
 tip : 초보몽키 블로그
+
+
+
+
+
+### 10. django-extensions 설치
+
+```python
+$ pip install django-extensions
+```
+
+
+
+<project>/settings.py
+
+extensions 등록
+
+```python
+INSTALLED_APPS = [
+    'articles',
+
+    # third party
+    'django_extensions',
+    
+    ]
+```
+
+
+
+!!!! **install할때는 django-extensions, 등록할때는 django_extensions**
+
+shell_plus 적용
+
+```bash
+$ python manage.py shell_plus
+```
+
+
+
+# 2. CRUD templates setting(다시 해보기)
+
+<project>/templates를 생성하고 이를 읽도록 하게하는 작업
+
+1) <project>/setting.py 
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'crud', 'templates',)],
+        'APP_DIRS': True,
+    }
+]
+```
+
+- `BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))`은 장고가 기본적으로 제공하는 프로젝트 첫 화면을 가리킨다.
+
+
+
+2) crud/templates/base.html 작성
+
+```django
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}
+  {% endblock  %}</title>
+  {% comment %} bootstrap css {% endcomment %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+  {% block content %}
+  {% endblock  %}
+  {% comment %} bootstrap js {% endcomment %}
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
+```
+
+
+
+3) crud/urls.py
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('articles/', include('articles.urls')),
+]
+
+```
+
+
+
+4) articles/urls.py 생성
+
+```python
+# articles/___
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('index/', views.index),
+]
+```
+
+
+
+5)  articles/views.py
+
+```python
+from django.shortcuts import render
+
+# Create your views here.
+def index(reqeust):
+    return render(reqeust, 'articles/index.html')
+```
+
+
+
+6) articles/templates/articles/index.html
+
+```django
+{% extends 'base.html' %}
+{% block title %}
+index
+{% endblock  %}
+
+{% block content %}
+<h1>Articles List</h1>
+{% endblock  %}
+```
+
+- base.html 적용시키기 -> templates 확장(extention)

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+index
+{% endblock  %}
+
+{% block content %}
+<h1>Articles List</h1>
+<ul>
+{% for article in articles  %}
+<li>{{ article.content }}</li>
+{% endfor %}
+</ul>
+<form action="/articles/new">
+<button>게시글 작성</button></form>
+{% endblock  %}
