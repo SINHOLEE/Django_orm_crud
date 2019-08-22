@@ -426,7 +426,7 @@ articles.models.Article.MultipleObjectsReturned: get() returned more than one Ar
 
 
 
-### 데이터베이스 자료 삭제(delete)
+### 6. 데이터베이스 자료 삭제(delete)
 
 ```shell
 >>> article = Article.objects.get(pk=1)
@@ -436,7 +436,7 @@ articles.models.Article.MultipleObjectsReturned: get() returned more than one Ar
 
 
 
-### 데이터베이스 바꾸기(update)
+### 7. 데이터베이스 바꾸기(update)
 
 - 기존 데이터
 
@@ -473,3 +473,73 @@ update 후 상태
 | 5    | 7    | second title   | fffffeqwfefeo aaa      | 2019-08-22 02:23:35.604831 | 2019-08-22 02:23:35.604831 |
 
 - created_at 과 updated_at의 데이터가 다르다.
+
+
+
+### 8. Django 관리자 권한 
+
+당고 관리자 권한 페이지를 사용하기 위해 등록한다.
+
+/articles/admin.py
+
+```python
+from .models import Article
+
+admin.site.register(Article) # 우리가 작성한 Article이라는 모델(클래스)를 admin page에 등록하겠다.
+
+# 등록하기 위해 admin페이지에 접속한다.
+$ python manage.py runserver
+```
+
+![캡처](images/캡처.PNG)
+
+admin 계정은 현재 없다. 계정을 생성한다.
+
+```python
+$ python manage.py createsuperuser
+
+
+사용자 이름 (leave blank to use 'student'): sinho
+이메일 주소: dltlsgh5@naver.com
+Password:
+Password (again):
+Superuser created successfully.
+```
+
+- 비밀번호 : tlsgh123
+
+![캡처1](images/캡처1.PNG)
+
+- 확인
+
+결과1
+
+![캡처2](images/캡처2.PNG)
+
+![캡처3](images/캡처3.PNG)
+
+![캡처4](images/캡처4.PNG)
+
+### 9. 관리자 화면 관리
+
+artricles/admin.py
+
+```python
+from django.contrib import admin
+from .models import Article
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'content', 'created_at', 'updated_at',)
+
+```
+
+- 관리자 디스플레이를 내가 원하는 정보를 배치할 수 있다.
+
+결과화면
+
+
+
+![캡처5](images/캡처5.PNG)
+
+tip : 초보몽키 블로그
