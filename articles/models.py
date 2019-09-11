@@ -18,3 +18,12 @@ class Article(models.Model):
 
     def __str__(self):
         return f'{self.id}번 글 - {self.title} : {self.content}'
+
+class Student(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=300)
+    birthday = models.DateField()
+    age = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.name}'
